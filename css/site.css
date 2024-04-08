@@ -1,0 +1,39 @@
+body {
+    background-color: gray !important;
+  }
+table {
+    width: 100%; text-align: center;
+}
+table.table-plugin {
+    --border: 1px solid white;
+    border-radius: 10px;
+    border-spacing: 0;
+    border-collapse: separate;
+    border: var(--border);
+    overflow: hidden;
+  }
+  table.table-plugin-header td {
+    background: red;
+    width: 15%;
+  }
+  table.table-plugin-body td {
+    background: white;
+    width: 15%;
+  }
+  table.table-plugin tbody tr {
+    height: 15%;
+  }
+  table.table-plugin th:not(:last-child),
+  table.table-plugin td:not(:last-child) {
+   border-right: var(--border);
+  }
+
+  .container {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    padding: 0% !important;
+    min-width: 80%;
+  }
+  

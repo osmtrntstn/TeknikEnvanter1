@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envanter 1</title>
+    <link rel="stylesheet" href="./css/site.css">
+    <link rel="stylesheet" href="./css/popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="dv-table-plugin" class="ui-table-plugin-page-cell"></div>
+    </div>
+    <div class="popup" data-popup="popup-1">
+        <div class="popup-inner">
+            <h2>Wow! This is Awesome! (Popup #1)</h2>
+            <p>Donec in volutpat nisi. In quam lectus, aliquet rhoncus cursus a, congue et arcu. Vestibulum tincidunt
+                neque id nisi pulvinar aliquam. Nulla luctus luctus ipsum at ultricies. Nullam nec velit dui. Nullam sem
+                eros, pulvinar sed pellentesque ac, feugiat et turpis. Donec gravida ipsum cursus massa malesuada
+                tincidunt. Nullam finibus nunc mauris, quis semper neque ultrices in. Ut ac risus eget eros imperdiet
+                posuere nec eu lectus.</p>
+            <p><a data-popup-close="popup-1" href="#">Close</a></p>
+
+            <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+        </div>
+    </div>
+    <div class="popup" data-popup="popup-2">
+        <div class="popup-inner">
+            <h2>Kullanıcı Bilgileri</h2>
+            <ul id="table-plugin-detail">
+                
+            </ul>
+            <a class="popup-close" data-popup-close="popup-2" href="#">x</a>
+        </div>
+    </div>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/popup.js"></script>
+    <script src="./js/table-plugin.jquery.js"></script>
+
+    <script>
+        var columns = [
+            {
+                name: "id",
+                displayName: "Id",
+                type: "id",
+                show: false
+            },
+            {
+                name: "person",
+                displayName: "Kişi",
+                type: "text",
+                show: true
+            },
+            {
+                name: "identify",
+                displayName: "Tc No",
+                type: "text",
+                show: true
+            },
+            {
+                name: "mail",
+                displayName: "E Mail",
+                type: "text",
+                show: true
+            },
+            {
+                name: "phone",
+                displayName: "Telefon",
+                type: "phone",
+                show: true
+            },
+            {
+                name: "city",
+                displayName: "Dogum yeri",
+                type: "text",
+                show: false
+            },
+            {
+                name: "orderNumber",
+                displayName: "Sira numarasi",
+                type: "text",
+                show: false
+            }
+        ]
+        var data = [
+            {
+                id: 1,
+                person: "Osman Turan",
+                identify: "11111111111",
+                mail: "osm@osm.com",
+                phone: "5454544545",
+                orderNumber: 2,
+                city: "Kayseri",
+                subData: [
+                    {
+                        id: 2,
+                        person: "Osman Turan1",
+                        identify: "11111111111",
+                        phone: "5454544545",
+                        orderNumber: 2,
+                        city: "Kayseri",
+                        mail: "osm@osm.com"
+                    },
+                    {
+                        id: 3,
+                        person: "Osman Turan5",
+                        identify: "11111111111",
+                        mail: "osm@osm.com",
+                        phone: "5454544545",
+                        orderNumber: 2,
+                        city: "Kayseri"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                person: "Osman Turan",
+                identify: "11111111111",
+                subData: [
+                    {
+                        id: 2,
+                        person: "Osman Turan2",
+                        identify: "11111111111",
+                        phone: "5454544545",
+                        orderNumber: 2,
+                        city: "Kayseri",
+                        mail: "osm@osm.com"
+                    },
+                    {
+                        id: 3,
+                        person: "Osman Turan3",
+                        identify: "11111111111",
+                        mail: "osm@osm.com",
+                        phone: "5454544545",
+                        orderNumber: 2,
+                        city: "Kayseri"
+                    }
+                ],
+                phone: "5454544545",
+                orderNumber: 2,
+                city: "Kayseri",
+                mail: "osm@osm.com"
+            },
+            {
+                id: 3,
+                person: "Osman Turan",
+                identify: "11111111111",
+                mail: "osm@osm.com",
+                phone: "5454544545",
+                orderNumber: 2,
+                city: "Kayseri"
+            },
+            {
+                id: 4,
+                person: "Osman Turan",
+                identify: "11111111111",
+                mail: "osm@osm.com",
+                phone: "5454544545",
+                orderNumber: 2,
+                city: "Kayseri"
+            }
+        ]
+        var options = {
+            columns: columns,
+            data: data
+        }
+        $("#dv-table-plugin").tablePlugin(options);
+        // $("#table-plugin").tablePlugin(options);
+    </script>
+</body>
+
+</html>
