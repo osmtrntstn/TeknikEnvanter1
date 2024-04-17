@@ -55,22 +55,22 @@
                         var td = $("<td/>");
 
                         var cellDv = $("<div/>");
-                        cellDv.addClass("ui-table-plugin-page-cell")
+                        cellDv.addClass("ui-table-plugin-page-cell centered")
                         cellDv.attr("id", "table-plugin-cell-counter-" + i + "-" + column.name);
                         var cellHtml = "";
                         if (celCounter == 0) {
                             td.css("text-align", "left")
                             if (data.subData)
-                                cellHtml = cellHtml + '<button onclick="openSubElements(\'ui-table-plugin-body-' + i + '\')">+</button>';
+                                cellHtml = cellHtml + '<a id="'+"table-plugin-cell-pointer-" + i + "-" + column.name+'" class="sub-cells" onclick="openSubElements(this,\'ui-table-plugin-body-' + i + '\')"><i class="fa-solid fa-chevron-right"></i></a>';
                             else
-                                cellHtml = cellHtml + '<button>+</button>';
+                                cellHtml = cellHtml + '<a class="sub-cells"><i class="fa-solid fa-chevron-right"></i></i></a>';
                         }
-                        if (column.type === "phone") {
-                            cellHtml = cellHtml + "<a data-popup-open='popup-1' href='#'>" + data[column.name] + '</a>';
+                        cellHtml = cellHtml + data[column.name];
+
+                        if (column.type === "phone" || column.type === "identify") {
+                            td.addClass("popup-cell");
                         }
-                        else {
-                            cellHtml = cellHtml + data[column.name]
-                        }
+
                         cellDv.html(cellHtml)
                         td.append(cellDv)
                         tr.append(td)
@@ -90,24 +90,25 @@
             for (var i = 0; i < subItems.length; i++) {
                 var data = subItems[i];
                 var tr = $("<tr/>");
-                tr.addClass(className + index + "-sub");
+                tr.addClass(className + index + "-sub" );
                 tr.css("display", "none");
                 var celCounter = 0;
                 for (var j = 0; j < columns.length; j++) {
                     var column = columns[j];
                     if (column.show) {
                         var td = $("<td/>");
+                        td.addClass('sub-td')
                         var cellDv = $("<div/>");
                         cellDv.addClass("ui-table-plugin-page-cell-sub")
                         cellDv.attr("id", "table-plugin-cell-sub-counter-" + index + "-" + i + "-" + column.name);
                         var cellHtml = "";
 
-                        if (column.type === "phone") {
-                            cellHtml = cellHtml + "<a data-popup-open='popup-1' href='#'>" + data[column.name] + '</a>';
+                        if (column.type === "phone" || column.type === "identify") {
+                            td.addClass("popup-cell");
                         }
-                        else {
-                            cellHtml = cellHtml + data[column.name]
-                        }
+
+                        cellHtml = cellHtml + data[column.name]
+
                         cellDv.html(cellHtml)
                         td.append(cellDv)
                         tr.append(td)
@@ -122,25 +123,32 @@
             var myComponent = aEvent.data.component;
             var myData = myComponent.data("tablePlugin");
             var myCell = $(aEvent.currentTarget);
-            var ulElem =  $("#table-plugin-detail");
+            var ulElem = $("#table-plugin-detail");
             ulElem.html("");
             var myId = myCell.attr("id");
             if (myId.indexOf("table-plugin-cell-sub-counter-") === 0) {
                 var myTableLocation = myId.replace("table-plugin-cell-sub-counter-", "").split("-");
-                if (myTableLocation[2] === "phone")
+                exData = myData.options.data[myTableLocation[0]].subData[myTableLocation[1]]
+           
+                if (myTableLocation[2] === "phone"){
                     $('[data-popup="popup-1"]').fadeIn(350);
+
+                    $("#phone").text(exData[myData.options.columns.filter(v => v.type === "phone")[0].name])
+                    $("#phone-link").attr("href","tel:"+exData[myData.options.columns.filter(v => v.type === "phone")[0].name])
+
+                    $("#mail").text(exData[myData.options.columns.filter(v => v.type === "mail")[0].name])
+                    $("#mail-link").attr("href","mailto:"+exData[myData.options.columns.filter(v => v.type === "mail")[0].name])
+                }
                 if (myTableLocation[2] === "identify") {
                     $('[data-popup="popup-2"]').fadeIn(350);
-                    exData = myData.options.data[myTableLocation[0]].subData[myTableLocation[1]]
                     for (var i = 0; i < myData.options.columns.length; i++) {
                         var column = myData.options.columns[i];
-                        console.log(column.displayName);
                         var li = $("<li/>");
                         var lbl = $("<label/>");
                         var b = $("<b/>");
                         b.text(column.displayName);
                         var span = $("<span/>");
-                        span.text(" : "+exData[column.name]);
+                        span.text(" : " + exData[column.name]);
 
                         lbl.append(b);
                         lbl.append(span);
@@ -151,21 +159,30 @@
 
                     }
                 }
-            } else {
+            } 
+            
+            else {
                 var myTableLocation = myId.replace("table-plugin-cell-counter-", "").split("-");
-                if (myTableLocation[1] === "phone")
+                var exData = myData.options.data[myTableLocation[0]];
+          
+                if (myTableLocation[1] === "phone"){
                     $('[data-popup="popup-1"]').fadeIn(350);
+
+                    $("#phone").text(exData[myData.options.columns.filter(v => v.type === "phone")[0].name])
+                    $("#phone-link").attr("href","tel:"+exData[myData.options.columns.filter(v => v.type === "phone")[0].name])
+
+                    $("#mail").text(exData[myData.options.columns.filter(v => v.type === "mail")[0].name])
+                    $("#mail-link").attr("href","mailto:"+exData[myData.options.columns.filter(v => v.type === "mail")[0].name])
+                }
                 if (myTableLocation[1] === "identify") {
-                    var exData = myData.options.data[myTableLocation[0]];
                     for (var i = 0; i < myData.options.columns.length; i++) {
                         var column = myData.options.columns[i];
-                        console.log(column.displayName);
                         var li = $("<li/>");
                         var lbl = $("<label/>");
                         var b = $("<b/>");
                         b.text(column.displayName);
                         var span = $("<span/>");
-                        span.text(" : "+exData[column.name]);
+                        span.text(" : " + exData[column.name]);
 
                         lbl.append(b);
                         lbl.append(span);
@@ -178,11 +195,6 @@
                     $('[data-popup="popup-2"]').fadeIn(350);
                 }
             }
-
-            // alert(JSON.stringify(myData.options.data[myTableLocation[0]]))
-            // methods.private_activateEditor(myComponent, myCell, myTableLocation);
-
-            // methods.private_selectRow(myComponent, myCell, myTableLocation);
         },
         getCellValue: function (aRow, aIndex, aColumn) {
             return aRow[(aColumn.field || aIndex)];
@@ -197,10 +209,17 @@
     };
 })(jQuery);
 
-function openSubElements(className) {
-    if ($("." + className + "-sub")[0].style.display == "none")
+function openSubElements(el,className) {
+    if ($("." + className + "-sub")[0].style.display == "none"){
         $("." + className + "-sub").fadeIn(350)
-    else
+        el.childNodes[0].className = "svg-inline--fa fa-chevron-down";
+        el.childNodes[0].dataset.icon = "chevron-down";
+        
+    }
+    else{
         $("." + className + "-sub").fadeOut(350)
+        el.childNodes[0].className = "svg-inline--fa fa-chevron-right";
+        el.childNodes[0].dataset.icon = "chevron-right";
 
+    }
 }
